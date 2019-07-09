@@ -7,7 +7,6 @@ def main():
     f = igunit.FileConf()
     f.load('file.conf')
 
-    time.sleep(60)
     confname = 'multi_test0'
     conf = igunit.Conf()
     conf.load('conf/' + confname + '.conf')
