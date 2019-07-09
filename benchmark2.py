@@ -40,7 +40,7 @@ def main():
 
     time.sleep(60)
     conf = igunit.Conf()
-    conf.load('conf/multi_test0.conf')
+    conf.load('conf/multi_test1.conf')
     conf.clearRaw()
     igunit.multitest(conf)
     data = analyze.Data(os.getpid())
