@@ -52,6 +52,8 @@ class Data():
         files = os.listdir(dir)
         print('loading ' + str(files) + ' ...')
         for f in files:
+            if f == '.keep':
+                continue
             with open(dir + f) as jf:
                 tmp = json.load(jf)
                 self.success.extend(tmp['success'])

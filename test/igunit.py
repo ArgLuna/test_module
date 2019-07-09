@@ -23,6 +23,8 @@ class Conf():
     def clearRaw(self):
         files = os.listdir(self.rawdir)
         for f in files:
+            if f == '.keep':
+                continue
             os.remove(self.rawdir + f)
 
     def load(self, path):
