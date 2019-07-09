@@ -48,6 +48,35 @@ class Conf():
         with open(path, 'w') as out:
             json.dump(tmp, out)
 
+class FileConf():
+    def __init__(self):
+        self.modmode = 'nomod'
+        self.migmode = 'normal'
+        self.accpprob = ''
+
+    def printconf(self):
+        print('modmode = ' + str(self.modmode))
+        print('migmode = ' + str(self.migmode))
+        print('accpprob = ' + str(self.accpprob))
+
+    def getPostfix(self):
+        return (self.modmode + '_' + self.migmode + '_' + str(self.accpprob))
+
+    def load(self, path):
+        tmp = {}
+        with open(path) as config:
+            tmp = json.load(config)
+        self.modmode = tmp['modmode']
+        self.migmode = tmp['migmode']
+        self.accpprob = tmp['accpprob']
+
+    def save(self, path):
+        tmp = {'modmode' : self.modmode,
+            'migmode' : self.migmode,
+            'accpprob' : self.accpprob}
+        with open(path, 'w') as out:
+            json.dump(tmp, out)
+
 default = Conf()
 
 def multitest(conf = default):
