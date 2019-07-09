@@ -8,11 +8,11 @@ tcp_tout = 10
 # banner_timeout (for paramiko)
 b_tout = 10
 # connect target
-dst = '192.168.168.67'
+dst = '140.115.59.2'
 # target port
 dport = 2222
 # login as
-user = 'libvirt'
+user = 'server'
 
 def runtest(test = 0):
     if test == 0:
