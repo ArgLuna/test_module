@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8
 from paramiko import *
-import time, socket
+import time, socket, hashlib, requests
 
 # tcp timeout
 tcp_tout = 10
@@ -14,13 +14,36 @@ dport = 2222
 # login as
 user = 'server'
 
+localImgMd5 = '4100c034713e3989728888073aa10a2c'
+
+imgurl = 'https://www.whitehouse.gov/wp-content/uploads/2017/11/Immigration.jpg'
+
 def runtest(test = 0):
     if test == 0:
         return microbenchmark()
     elif test == 1:
         return macrobmSSH0()
+    elif test == 2:
+        return getImgTest()
     else:
         return (-2, 'conf error')
+
+def getImgTest():
+    t0 = None
+    t1 = None
+    try:
+        t0 = time.time()
+        res = requests.get(imgurl)
+        t1 = time.time()
+        if hashlib.md5(res.content).hexdigest() == localImgMd5:
+            return (t1 - t0, None)
+        else:
+            return (-(t1 - t0), 'integrity check fail')
+    except Exception as e:
+        t1 = time.time()
+        t1 -= t0
+        print(e)
+        return (-(t1 - t0), str(e))
 
 def macrobmSSH0():
     t0 = None
