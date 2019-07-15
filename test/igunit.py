@@ -82,7 +82,7 @@ default = Conf()
 def multitest(conf = default):
     pool = multiprocessing.Pool(conf.max_pnum)
     for i in range(conf.pnum):
-        pool.apply_async(singletest, args = (conf,))
+        pool.apply_async(singletest, args = (conf, i,))
     pool.close()
     try:
         pool.join()
@@ -91,9 +91,9 @@ def multitest(conf = default):
     except Exception as e:
         print(e)
 
-def singletest(conf = default):
+def singletest(conf, idn):
     time.sleep(random.randint(1, 1000) / 1000)
-    data = analyze.Data(os.getpid())
+    data = analyze.Data(str(os.getpid()) + '-' + str(idn))
     try:
         for i in range(conf.times):
             tup = unit.runtest(conf.tunit)

@@ -36,7 +36,7 @@ def getImgTest():
         res = requests.get(imgurl)
         t1 = time.time()
         if hashlib.md5(res.content).hexdigest() == localImgMd5:
-            return (t1 - t0, None)
+            return (t1 - t0, str(None))
         else:
             return (-(t1 - t0), 'integrity check fail')
     except Exception as e:
@@ -57,10 +57,9 @@ def macrobmSSH0():
         sc.connect(hostname = dst, port = dport, username = user, pkey = k, timeout = tcp_tout, banner_timeout = b_tout)
     except Exception as e:
         t1 = time.time()
-        t1 -= t0
         print(e)
         sc.close()
-        return (-t1, e)
+        return (-(t1 - t0), str(e))
     t1 = time.time()
     sh = sc.invoke_shell()
     sin = sh.makefile('wb')
@@ -93,11 +92,9 @@ def microbenchmark():
         sock.connect((dst, dport))
         t1 = time.time()
         sock.close()
-        t1 -= t0
+        return ((t1 - t0), str(None))
     except Exception as e:
         t1 = time.time()
         sock.close()
         print(e)
-        t1 -= t0
-        return (-t1, e)
-    return (t1, None)
+        return (-(t1 - t0), str(e))
